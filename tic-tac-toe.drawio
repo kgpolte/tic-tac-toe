@@ -1,15 +1,15 @@
-<mxfile host="app.diagrams.net" modified="2023-01-28T19:19:39.645Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36" etag="YECDT9g0adQmtgNPr8N7" version="20.8.13" type="github">
+<mxfile host="app.diagrams.net" modified="2023-01-28T19:34:41.851Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36" etag="Lb95Tx5xIijV5f6XFfCB" version="20.8.13" type="github">
   <diagram name="Page-1" id="5d7acffa-a066-3a61-03fe-96351882024d">
     <mxGraphModel dx="1434" dy="771" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="NXrp07bVZsFrneDTtaF1-1" value="Game" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="490" y="120" width="210" height="200" as="geometry">
+          <mxGeometry x="490" y="40" width="210" height="200" as="geometry">
             <mxRectangle x="50" y="90" width="70" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="NXrp07bVZsFrneDTtaF1-2" value="gameElement: &amp;lt;DOM query&amp;gt;&lt;br&gt;&lt;br&gt;playRound: function() {},&lt;br&gt;playGame: function() {}," style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="NXrp07bVZsFrneDTtaF1-1">
+        <mxCell id="NXrp07bVZsFrneDTtaF1-2" value="_gameElement&lt;br&gt;_player1,&lt;br&gt;_player2,&lt;br&gt;_gameBoard,&lt;br&gt;&lt;br&gt;playRound(),&lt;br&gt;playGame()," style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="NXrp07bVZsFrneDTtaF1-1">
           <mxGeometry x="10" y="30" width="190" height="160" as="geometry" />
         </mxCell>
         <mxCell id="NXrp07bVZsFrneDTtaF1-7" value="GameBoard" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
@@ -17,11 +17,14 @@
             <mxRectangle x="50" y="90" width="70" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="NXrp07bVZsFrneDTtaF1-8" value="_cells: [&lt;br&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; [][][]&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&amp;nbsp; [][][]&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&amp;nbsp; [][][]&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;]&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;placeMark: function(mark) {},&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;resetBoard: function() {},&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="NXrp07bVZsFrneDTtaF1-7">
+        <mxCell id="NXrp07bVZsFrneDTtaF1-8" value="_cells: [&lt;br&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; [Cell][&lt;/span&gt;Cell][Cell],&lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;span style=&quot;border-color: var(--border-color); background-color: initial;&quot;&gt;[Cell][&lt;/span&gt;Cell][Cell&lt;span style=&quot;border-color: var(--border-color); background-color: initial;&quot;&gt;],&lt;br&gt;&lt;/span&gt;&amp;nbsp;&amp;nbsp;&lt;span style=&quot;border-color: var(--border-color); background-color: initial;&quot;&gt;[Cell][&lt;/span&gt;Cell][Cell&lt;span style=&quot;border-color: var(--border-color); background-color: initial;&quot;&gt;]&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;],&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;init(),&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;bindEvents(),&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;render(),&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;placeMark(row, column, mark),&lt;/span&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="NXrp07bVZsFrneDTtaF1-7">
           <mxGeometry x="10" y="30" width="190" height="230" as="geometry" />
         </mxCell>
+        <mxCell id="NXrp07bVZsFrneDTtaF1-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="NXrp07bVZsFrneDTtaF1-12" target="NXrp07bVZsFrneDTtaF1-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="NXrp07bVZsFrneDTtaF1-12" value="Player" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="230" y="120" width="210" height="200" as="geometry">
+          <mxGeometry x="100" y="120" width="210" height="200" as="geometry">
             <mxRectangle x="50" y="90" width="70" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -29,11 +32,19 @@
           <mxGeometry x="10" y="30" width="190" height="160" as="geometry" />
         </mxCell>
         <mxCell id="NXrp07bVZsFrneDTtaF1-14" value="ComputerPlayer" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="230" y="350" width="210" height="270" as="geometry">
+          <mxGeometry x="100" y="350" width="210" height="270" as="geometry">
             <mxRectangle x="50" y="90" width="70" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
         <mxCell id="NXrp07bVZsFrneDTtaF1-15" value="_cells: [&lt;br&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; [][][]&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&amp;nbsp; [][][]&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&amp;nbsp; [][][]&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;]&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;placeMark: function(mark) {},&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;resetBoard: function() {},&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="NXrp07bVZsFrneDTtaF1-14">
+          <mxGeometry x="10" y="30" width="190" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="NXrp07bVZsFrneDTtaF1-17" value="Cell" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="350" width="210" height="270" as="geometry">
+            <mxRectangle x="50" y="90" width="70" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NXrp07bVZsFrneDTtaF1-18" value="_contents,&lt;br&gt;&lt;br&gt;udpateContents(mark)," style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="NXrp07bVZsFrneDTtaF1-17">
           <mxGeometry x="10" y="30" width="190" height="230" as="geometry" />
         </mxCell>
       </root>
