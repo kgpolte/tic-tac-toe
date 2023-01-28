@@ -16,11 +16,14 @@ const gameBoard = (function () {
   ];
 
   function placeMark(row, column, mark) {
-    cells[row][column] = mark;
     const button = elements.gameBoard.querySelector(
       `button[data-row="${row}"][data-column="${column}"]`
     );
-    button.classList.add(mark);
+
+    cells[row][column] = mark;
+    button.classList.add(game.getTurn());
+    button.setAttribute("disabled", "true")
+    game.toggleTurn();
   }
 
   // Renders the x and o icons inside a single cell
@@ -56,11 +59,44 @@ const gameBoard = (function () {
     }
   }
 
+  function bindEvents() {
+    const buttons = Array.from(elements.gameBoard.querySelectorAll("button"));
+    // TODO: update button event listener to send the right mark based on turn
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        placeMark(
+          button.getAttribute("data-row"),
+          button.getAttribute("data-column"),
+          "x"
+        );
+      });
+    });
+  }
+
   function init() {
     render();
+    bindEvents();
   }
 
   return { init, placeMark };
 })();
 
 gameBoard.init();
+
+const game = (function() {
+  let turn = "x";
+
+  function getTurn() {
+    return turn;
+  }
+
+  function toggleTurn() {
+    turn = (turn === "x") ? "o" : "x";
+  }
+
+  return {
+    turn,
+    getTurn,
+    toggleTurn,
+  }
+})();
