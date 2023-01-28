@@ -2,3 +2,54 @@
   margin: 0;
   padding: 0;
 }
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+.main {
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  height: 100%;
+}
+
+#game {
+
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1em;
+  height: 100%;
+}
+
+.cell {
+  height: 5em;
+  width: 5em;
+  position: relative;
+  border: 1px solid gray;
+  border-radius: 8px;
+}
+
+.cell > img {
+  position: absolute;
+  height: 80%;
+  top: 10%;
+  left: 10%;
+}
+
+.cell.empty > img {
+  opacity: 0;
+}
+
+.cell.x > .x-icon,
+.cell.o > .o-icon {
+  opacity: 1;
+  transition: opacity 300ms;
+}
