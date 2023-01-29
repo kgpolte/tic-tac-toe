@@ -18,6 +18,11 @@ body {
   height: 100%;
 }
 
+#game {
+  padding: 1em;
+  background: lightblue;
+}
+
 #game-board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -31,6 +36,7 @@ body {
   position: relative;
   border: 1px solid gray;
   border-radius: 8px;
+  background: none;
 }
 
 .cell > img {

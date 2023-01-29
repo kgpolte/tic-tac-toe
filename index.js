@@ -1,3 +1,24 @@
+function createPlayer(name) {
+  let score = 0;
+
+  function getName() {
+    return name;
+  }
+
+  function getScore() {
+    return score;
+  }
+
+  function addPoint() {
+    score++;
+  }
+
+  return { getName, getScore, addPoint };
+}
+
+const playerX = createPlayer("Kenny");
+const playerO = createPlayer("Ginny-Mei");
+
 const gameBoard = (function () {
   const element = document.getElementById("game-board");
 
@@ -7,8 +28,6 @@ const gameBoard = (function () {
     ["", "", ""],
   ];
 
-  // getColumns() and getDiagonals are needed for extracting non-row lines of three
-  // from a row-based array for easy iteration when checking for a winner
   function getColumns(rows) {
     const columns = [];
 
@@ -31,15 +50,16 @@ const gameBoard = (function () {
     let winner = null;
 
     lines.forEach((line) => {
-      // Check if every item in the line is the same and also not empty
       const allEqual = line.every((mark) => mark === line[0] && mark !== "");
 
-      if (allEqual) {
-        if (line[0] === "x") {
-          winner = playerX;
-        } else {
-          winner = playerO;
-        }
+      if (!allEqual) {
+        return;
+      }
+
+      if (line[0] === "x") {
+        winner = playerX;
+      } else {
+        winner = playerO;
       }
     });
 
@@ -102,7 +122,7 @@ const gameBoard = (function () {
 
   function bindEvents() {
     const buttons = Array.from(element.querySelectorAll("button"));
-    
+
     buttons.forEach((button) => {
       button.addEventListener("click", () => {
         placeMark(
@@ -121,29 +141,6 @@ const gameBoard = (function () {
 
   return { init };
 })();
-
-gameBoard.init();
-
-function createPlayer(name) {
-  let score = 0;
-
-  function getName() {
-    return name;
-  }
-
-  function getScore() {
-    return score;
-  }
-
-  function addPoint() {
-    score++;
-  }
-
-  return { getName, getScore, addPoint };
-}
-
-const playerX = createPlayer("Kenny");
-const playerO = createPlayer("Ginny-Mei");
 
 const game = (function () {
   const element = document.getElementById("game");
@@ -166,7 +163,10 @@ const game = (function () {
     player.addPoint();
   }
 
-  function init() {}
+  function init() {
+    gameBoard.init();
+    inputPlayerNames();
+  }
 
   return {
     getTurn,
@@ -175,3 +175,5 @@ const game = (function () {
     init,
   };
 })();
+
+game.init();
