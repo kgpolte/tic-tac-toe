@@ -39,6 +39,28 @@ label {
   display: block;
 }
 
+#scoreboard {
+  display: grid;
+  grid-template-columns: 1fr max-content 1fr;
+  gap: 0.5em;
+}
+
+#scoreboard > h2 {
+  justify-self: center;
+  align-self: center;
+}
+
+#scoreboard > .player {
+  display: grid;
+  gap: 0.2em;
+  justify-items: center;
+}
+
+.player > .name {
+  font-size: 1em;
+  font-weight: bold;
+}
+
 #game-board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -50,8 +72,8 @@ label {
 }
 
 .cell {
-  height: 5em;
-  width: 5em;
+  height: 100px;
+  width: 100px;
   position: relative;
   border: 1px solid gray;
   border-radius: 8px;

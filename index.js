@@ -1,7 +1,7 @@
 function createPlayer() {
-
   let score = 0;
   let name;
+  let mark;
 
   function getName() {
     return name;
@@ -20,15 +20,23 @@ function createPlayer() {
     score = num;
   }
 
+  function setMark(character) {
+    if (character !== "x" && character !== "o") return;
+    mark = character;
+  }
+
+  function getMark() {
+    return mark;
+  }
+
   function getInfo() {
-    // Returns a <p> containing two spans with the player's name and score
-    
     const playerElement = document.createElement("p");
+    playerElement.setAttribute("data-name", name);
     playerElement.classList.add("player");
 
     const nameElement = document.createElement("span");
     nameElement.classList.add("name");
-    nameElement.textContent = getName();
+    nameElement.textContent = `${getName()} (${getMark().toUpperCase()})`;
     playerElement.appendChild(nameElement);
 
     const scoreElement = document.createElement("span");
@@ -44,6 +52,8 @@ function createPlayer() {
     setName,
     getScore,
     updateScore,
+    getMark,
+    setMark,
     getInfo,
   };
 }
@@ -53,6 +63,7 @@ const game = (function () {
   const nameForm = element.querySelector("form");
   const nameInputs = Array.from(element.querySelectorAll("input"));
   const startButton = element.querySelector("form > button");
+  const scoreBoard = document.getElementById("scoreboard");
 
   let turn = "x";
   const playerX = createPlayer();
@@ -66,26 +77,37 @@ const game = (function () {
     turn = turn === "x" ? "o" : "x";
   }
 
-  function createPlayers() {
+  function initPlayers() {
     playerX.setName(document.getElementById("x-name").value);
+    playerX.setMark("x");
     playerO.setName(document.getElementById("o-name").value);
+    playerO.setMark("o");
   }
 
   function renderScoreboard(...players) {
-    const scoreBoard = element.querySelector(".scoreboard");
+    scoreBoard.appendChild(players[0].getInfo());
+    const versusText = document.createElement("h2");
+    versusText.textContent = "Vs.";
+    scoreBoard.appendChild(versusText);
+    scoreBoard.appendChild(players[1].getInfo());
 
-    const children = Array.from(scoreBoard.children);
-    children.forEach(child => child.remove());
-
-    players.forEach((player) => {
-      scoreBoard.appendChild(player.getInfo());
-    });
+    const nextRoundBtn = document.createElement("button");
+    nextRoundBtn.classList.add("next-round", "hidden");
+    nextRoundBtn.textContent = "Next Round";
+    scoreBoard.appendChild(nextRoundBtn);
 
     scoreBoard.classList.remove("hidden");
   }
 
+  function udpateScoreboard(winner) {
+    const scoreDisplay = scoreBoard.querySelector(
+      `[data-name="${winner.getName()}"] > .score`
+    );
+    scoreDisplay.textContent = winner.getScore();
+  }
+
   function start() {
-    createPlayers();
+    initPlayers();
     nameForm.reset();
     nameForm.classList.add("hidden");
     renderScoreboard(playerX, playerO);
@@ -93,11 +115,13 @@ const game = (function () {
   }
 
   function endRound(winner) {
-    console.log(`${winner.getName()} wins!`);
     winner.updateScore(winner.getScore() + 1);
-    renderScoreboard(playerX, playerO);
+    udpateScoreboard(winner);
+    element.querySelector(".next-round").classList.remove("hidden");
   }
 
+  // TODO: make sure names do not match before proceeding
+  // Show an error message if they do
   function validateInputs(inputs) {
     if (inputs.every((input) => input.validity.valid)) {
       startButton.disabled = false;
@@ -259,4 +283,4 @@ const gameBoard = (function () {
 
   return { init, show };
 })();
-gameBoard.init()
+gameBoard.init();
