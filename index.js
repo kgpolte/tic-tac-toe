@@ -1,23 +1,133 @@
-function createPlayer(name) {
+function createPlayer() {
+
   let score = 0;
+  let name;
 
   function getName() {
     return name;
+  }
+
+  function setName(string) {
+    name = string;
   }
 
   function getScore() {
     return score;
   }
 
-  function addPoint() {
-    score++;
+  function updateScore(num) {
+    if (!Number.isInteger(num)) return;
+    score = num;
   }
 
-  return { getName, getScore, addPoint };
+  function getInfo() {
+    // Returns a <p> containing two spans with the player's name and score
+    
+    const playerElement = document.createElement("p");
+    playerElement.classList.add("player");
+
+    const nameElement = document.createElement("span");
+    nameElement.classList.add("name");
+    nameElement.textContent = getName();
+    playerElement.appendChild(nameElement);
+
+    const scoreElement = document.createElement("span");
+    scoreElement.classList.add("score");
+    scoreElement.textContent = getScore();
+    playerElement.appendChild(scoreElement);
+
+    return playerElement;
+  }
+
+  return {
+    getName,
+    setName,
+    getScore,
+    updateScore,
+    getInfo,
+  };
 }
 
-const playerX = createPlayer("Kenny");
-const playerO = createPlayer("Ginny-Mei");
+const game = (function () {
+  const element = document.getElementById("game");
+  const nameForm = element.querySelector("form");
+  const nameInputs = Array.from(element.querySelectorAll("input"));
+  const startButton = element.querySelector("form > button");
+
+  let turn = "x";
+  const playerX = createPlayer();
+  const playerO = createPlayer();
+
+  function getTurn() {
+    return turn;
+  }
+
+  function toggleTurn() {
+    turn = turn === "x" ? "o" : "x";
+  }
+
+  function createPlayers() {
+    playerX.setName(document.getElementById("x-name").value);
+    playerO.setName(document.getElementById("o-name").value);
+  }
+
+  function renderScoreboard(...players) {
+    const scoreBoard = element.querySelector(".scoreboard");
+
+    players.forEach((player) => {
+      scoreBoard.appendChild(player.getInfo());
+    });
+
+    scoreBoard.classList.remove("hidden");
+  }
+
+  function start() {
+    createPlayers();
+    nameForm.reset();
+    nameForm.classList.add("hidden");
+    renderScoreboard(playerX, playerO);
+  }
+
+  function end(winner) {
+    console.log(`${winner.getName()} wins!`);
+    winner.updateScore(winner.getScore() + 1);
+  }
+
+  function validateInputs(inputs) {
+    if (inputs.every((input) => input.validity.valid)) {
+      startButton.disabled = false;
+    }
+  }
+
+  function bindEvents() {
+    startButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      start();
+    });
+
+    nameInputs.forEach((input) => {
+      input.addEventListener("input", () => {
+        if (validateInputs(nameInputs)) {
+          startButton.disabled = false;
+        }
+      });
+    });
+  }
+
+  function init() {
+    bindEvents();
+  }
+
+  return {
+    playerX,
+    playerO,
+    getTurn,
+    toggleTurn,
+    end,
+    init,
+  };
+})();
+game.init();
 
 const gameBoard = (function () {
   const element = document.getElementById("game-board");
@@ -57,12 +167,12 @@ const gameBoard = (function () {
       }
 
       if (line[0] === "x") {
-        winner = playerX;
+        winner = game.playerX;
       } else {
-        winner = playerO;
+        winner = game.playerO;
       }
     });
-
+    console.log(game.playerX);
     return winner;
   }
 
@@ -141,39 +251,4 @@ const gameBoard = (function () {
 
   return { init };
 })();
-
-const game = (function () {
-  const element = document.getElementById("game");
-  let turn = "x";
-
-  function getTurn() {
-    return turn;
-  }
-
-  function toggleTurn() {
-    turn = turn === "x" ? "o" : "x";
-  }
-
-  function inputPlayerNames() {}
-
-  function showScores() {}
-
-  function end(player) {
-    console.log(`${player.getName()} wins!`);
-    player.addPoint();
-  }
-
-  function init() {
-    gameBoard.init();
-    inputPlayerNames();
-  }
-
-  return {
-    getTurn,
-    toggleTurn,
-    end,
-    init,
-  };
-})();
-
-game.init();
+gameBoard.init()

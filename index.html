@@ -11,11 +11,26 @@
   <div class="header">
     <h1>Tic Tac Toe</h1>
   </div>
+
   <div class="main">
     <div id="game">
-      <div id="scoreboard">
-        <p id="player1"><span class="score"></span></p>
-      </div>
+
+      <form>
+        <h2>Get Ready to Battle!</h2>
+        <fieldset>
+          <legend>Enter Your Names</legend>
+          <p>
+            <label for="x-name" class="name-label">Player X</label>
+            <input id="x-name" class="name-input" type="text" required>
+          </p>
+          <p>
+            <label for="o-name" class="name-label">Player O</label>
+            <input id="o-name" class="name-input" type="text" required>
+          </p>
+        </fieldset>
+        <button disabled="true">Start</button>
+      </form>
+      <div class="scoreboard hidden"></div>
       <div id="game-board"></div>
     </div>
   </div>
