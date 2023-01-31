@@ -45,6 +45,10 @@ label {
   gap: 1em;
 }
 
+#game-board.hidden {
+  display: none;
+}
+
 .cell {
   height: 5em;
   width: 5em;

@@ -74,6 +74,9 @@ const game = (function () {
   function renderScoreboard(...players) {
     const scoreBoard = element.querySelector(".scoreboard");
 
+    const children = Array.from(scoreBoard.children);
+    children.forEach(child => child.remove());
+
     players.forEach((player) => {
       scoreBoard.appendChild(player.getInfo());
     });
@@ -86,11 +89,13 @@ const game = (function () {
     nameForm.reset();
     nameForm.classList.add("hidden");
     renderScoreboard(playerX, playerO);
+    gameBoard.show();
   }
 
-  function end(winner) {
+  function endRound(winner) {
     console.log(`${winner.getName()} wins!`);
     winner.updateScore(winner.getScore() + 1);
+    renderScoreboard(playerX, playerO);
   }
 
   function validateInputs(inputs) {
@@ -123,7 +128,7 @@ const game = (function () {
     playerO,
     getTurn,
     toggleTurn,
-    end,
+    endRound,
     init,
   };
 })();
@@ -172,7 +177,6 @@ const gameBoard = (function () {
         winner = game.playerO;
       }
     });
-    console.log(game.playerX);
     return winner;
   }
 
@@ -183,7 +187,7 @@ const gameBoard = (function () {
     const winner = checkLine(allBoardLines);
 
     if (winner) {
-      game.end(winner);
+      game.endRound(winner);
     }
   }
 
@@ -197,6 +201,10 @@ const gameBoard = (function () {
     button.setAttribute("disabled", "true");
     checkBoard();
     game.toggleTurn();
+  }
+
+  function show() {
+    element.classList.remove("hidden");
   }
 
   function renderCellIcons(cellElement) {
@@ -249,6 +257,6 @@ const gameBoard = (function () {
     bindEvents();
   }
 
-  return { init };
+  return { init, show };
 })();
 gameBoard.init()
