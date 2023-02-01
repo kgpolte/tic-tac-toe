@@ -16,6 +16,7 @@ body {
   display: grid;
   align-content: center;
   justify-content: center;
+  justify-items: center;
   height: 100%;
 }
 
@@ -23,6 +24,7 @@ body {
   padding: 1em;
   background: lightblue;
   display: grid;
+  width: min-content;
   gap: 0.5em;
 }
 
@@ -43,6 +45,7 @@ label {
   display: grid;
   grid-template-columns: 1fr max-content 1fr;
   gap: 0.5em;
+  text-align: center;
 }
 
 #scoreboard > h2 {
@@ -59,6 +62,7 @@ label {
 .player > .name {
   font-size: 1em;
   font-weight: bold;
+  overflow-wrap: break-word;
 }
 
 #game-board {
@@ -85,10 +89,8 @@ label {
   height: 80%;
   top: 10%;
   left: 10%;
-}
-
-.cell.empty > img {
   opacity: 0;
+  transition: opacity 300ms;
 }
 
 .cell.x > .x-icon,

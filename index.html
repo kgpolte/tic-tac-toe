@@ -21,12 +21,13 @@
           <legend>Enter Your Names</legend>
           <p>
             <label for="x-name" class="name-label">Player X</label>
-            <input id="x-name" class="name-input" type="text" required>
+            <input id="x-name" class="name-input" type="text" maxlength="15" required>
           </p>
           <p>
             <label for="o-name" class="name-label">Player O</label>
-            <input id="o-name" class="name-input" type="text" required>
+            <input id="o-name" class="name-input" type="text" maxlength="15" required>
           </p>
+          <p class="error-msg hidden"></p>
         </fieldset>
         <button disabled="true">Start</button>
       </form>

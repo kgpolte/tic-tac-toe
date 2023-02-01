@@ -31,7 +31,7 @@ function createPlayer() {
 
   function getInfo() {
     const playerElement = document.createElement("p");
-    playerElement.setAttribute("data-name", name);
+    playerElement.setAttribute("data-mark", mark);
     playerElement.classList.add("player");
 
     const nameElement = document.createElement("span");
@@ -64,7 +64,9 @@ const game = (function () {
   const nameInputs = Array.from(element.querySelectorAll("input"));
   const startButton = element.querySelector("form > button");
   const scoreBoard = document.getElementById("scoreboard");
+  const message = document.querySelector(".message");
 
+  let round = 1;
   let turn = "x";
   const playerX = createPlayer();
   const playerO = createPlayer();
@@ -84,6 +86,13 @@ const game = (function () {
     playerO.setMark("o");
   }
 
+  function newRound() {
+    round++;
+    message.textContent = `Round ${round}`;
+    this.classList.add("hidden");
+    gameBoard.reset();
+  }
+
   function renderScoreboard(...players) {
     scoreBoard.appendChild(players[0].getInfo());
     const versusText = document.createElement("h2");
@@ -93,7 +102,8 @@ const game = (function () {
 
     const nextRoundBtn = document.createElement("button");
     nextRoundBtn.classList.add("next-round", "hidden");
-    nextRoundBtn.textContent = "Next Round";
+    nextRoundBtn.textContent = "Play Again";
+    nextRoundBtn.addEventListener("click", newRound);
     scoreBoard.appendChild(nextRoundBtn);
 
     scoreBoard.classList.remove("hidden");
@@ -101,7 +111,7 @@ const game = (function () {
 
   function udpateScoreboard(winner) {
     const scoreDisplay = scoreBoard.querySelector(
-      `[data-name="${winner.getName()}"] > .score`
+      `[data-mark="${winner.getMark()}"] > .score`
     );
     scoreDisplay.textContent = winner.getScore();
   }
@@ -110,6 +120,7 @@ const game = (function () {
     initPlayers();
     nameForm.reset();
     nameForm.classList.add("hidden");
+    message.textContent = "Round 1";
     renderScoreboard(playerX, playerO);
     gameBoard.show();
   }
@@ -118,14 +129,14 @@ const game = (function () {
     winner.updateScore(winner.getScore() + 1);
     udpateScoreboard(winner);
     element.querySelector(".next-round").classList.remove("hidden");
+    message.textContent = `${winner.getName()} wins!`;
   }
 
-  // TODO: make sure names do not match before proceeding
-  // Show an error message if they do
   function validateInputs(inputs) {
     if (inputs.every((input) => input.validity.valid)) {
-      startButton.disabled = false;
+      return true;
     }
+    return false;
   }
 
   function bindEvents() {
@@ -205,7 +216,7 @@ const gameBoard = (function () {
   }
 
   function checkBoard() {
-    const allBoardLines = boardRows;
+    const allBoardLines = Array.from(boardRows);
     allBoardLines.push(...getColumns(boardRows));
     allBoardLines.push(...getDiagonals(boardRows));
     const winner = checkLine(allBoardLines);
@@ -215,13 +226,13 @@ const gameBoard = (function () {
     }
   }
 
-  function placeMark(row, column) {
+  function placeMark(row, column, mark) {
     const button = element.querySelector(
       `button[data-row="${row}"][data-column="${column}"]`
     );
 
-    boardRows[row][column] = game.getTurn();
-    button.classList.add(game.getTurn());
+    boardRows[row][column] = mark;
+    button.classList.add(mark);
     button.setAttribute("disabled", "true");
     checkBoard();
     game.toggleTurn();
@@ -229,6 +240,25 @@ const gameBoard = (function () {
 
   function show() {
     element.classList.remove("hidden");
+  }
+
+  function reset() {
+    const cells = Array.from(element.querySelectorAll("button"));
+
+    cells.forEach(cell => {
+      if (cell.classList.contains("x")) {
+        cell.classList.remove("x");
+      } else if (cell.classList.contains("o")) {
+        cell.classList.remove("o");
+      }
+      cell.disabled = false;
+    });
+
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        boardRows[i][j] = "";
+      }
+    }
   }
 
   function renderCellIcons(cellElement) {
@@ -247,7 +277,7 @@ const gameBoard = (function () {
 
   function renderCell(row, column) {
     const cellElement = document.createElement("button");
-    cellElement.classList.add("cell", "empty");
+    cellElement.classList.add("cell");
     cellElement.setAttribute("data-row", row);
     cellElement.setAttribute("data-column", column);
     renderCellIcons(cellElement);
@@ -257,7 +287,7 @@ const gameBoard = (function () {
   function render() {
     for (let row = 0; row < 3; row++) {
       for (let column = 0; column < 3; column++) {
-        renderCell(row, column, boardRows[row][column]);
+        renderCell(row, column);
       }
     }
   }
@@ -270,7 +300,7 @@ const gameBoard = (function () {
         placeMark(
           button.getAttribute("data-row"),
           button.getAttribute("data-column"),
-          "x"
+          game.getTurn()
         );
       });
     });
@@ -281,6 +311,10 @@ const gameBoard = (function () {
     bindEvents();
   }
 
-  return { init, show };
+  return {
+    init, 
+    show,
+    reset
+  };
 })();
 gameBoard.init();
