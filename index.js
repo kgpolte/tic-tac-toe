@@ -1,5 +1,4 @@
 // TODO:
-// style the score display to indicate the current turn
 
 function createPlayer() {
   let score = 0;
@@ -79,8 +78,19 @@ const game = (function () {
     return turn;
   }
 
+  function setScoreDisplayStyle(paragraph) {
+    if (paragraph.getAttribute("data-mark") === turn.getMark()) {
+      paragraph.classList.add("active");
+    } else {
+      paragraph.classList.remove("active");
+    }
+  }
+
   function toggleTurn() {
     turn = turn === playerX ? playerO : playerX;
+    Array.from(scoreboard.children).forEach((paragraph) =>
+      setScoreDisplayStyle(paragraph)
+    );
   }
 
   function initPlayers() {
@@ -98,7 +108,9 @@ const game = (function () {
   }
 
   function renderScoreboard(...players) {
-    scoreboard.appendChild(players[0].getInfo());
+    const playerXElement = players[0].getInfo();
+    playerXElement.classList.add("active");
+    scoreboard.appendChild(playerXElement);
     const versusText = document.createElement("h2");
     versusText.textContent = "Vs.";
     scoreboard.appendChild(versusText);
@@ -132,8 +144,8 @@ const game = (function () {
   }
 
   function endRound(winner) {
-    if(winner === "tie") {
-      message.textContent = "Tie Game!"
+    if (winner === "tie") {
+      message.textContent = "Tie Game!";
     } else {
       message.textContent = `${winner.getName()} wins!`;
       winner.setScore(winner.getScore() + 1);
@@ -244,7 +256,7 @@ const gameBoard = (function () {
   }
 
   function tie() {
-    return boardRows.every(row => row.every(mark => mark !== ""));
+    return boardRows.every((row) => row.every((mark) => mark !== ""));
   }
 
   function checkBoard() {
@@ -255,10 +267,11 @@ const gameBoard = (function () {
 
     if (winner) {
       game.endRound(winner);
+      return;
     }
 
     if (tie()) {
-      game.endRound('tie');
+      game.endRound("tie");
     }
   }
 

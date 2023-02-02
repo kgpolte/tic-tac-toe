@@ -74,8 +74,10 @@ label {
 #scoreboard {
   display: grid;
   grid-template-columns: 1fr max-content 1fr;
+  grid-template-rows: 60px 1fr;
+  align-content: start;
+  align-items: center;
   gap: 0.5em;
-  text-align: center;
 }
 
 #scoreboard > h2 {
@@ -87,12 +89,19 @@ label {
   display: grid;
   gap: 0.2em;
   justify-items: center;
+  transition: font-size 300ms;
+}
+
+#scoreboard > .active {
+  font-size: 1.2em;
+  filter: drop-shadow(2px 2px 2px var(--indigo));
+  transition: font-size 300ms;
 }
 
 .player > .name {
   font-size: 1em;
   font-weight: bold;
-  overflow-wrap: break-word;
+  color: var(--charcoal);
 }
 
 #game-board {
