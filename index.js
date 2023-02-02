@@ -1,5 +1,4 @@
 // TODO:
-// add tie detection
 // style the score display to indicate the current turn
 
 function createPlayer() {
@@ -133,10 +132,14 @@ const game = (function () {
   }
 
   function endRound(winner) {
-    winner.updateScore(winner.getScore() + 1);
-    udpateScoreboard(winner);
+    if(winner === "tie") {
+      message.textContent = "Tie Game!"
+    } else {
+      message.textContent = `${winner.getName()} wins!`;
+      winner.updateScore(winner.getScore() + 1);
+      udpateScoreboard(winner);
+    }
     element.querySelector(".next-round").classList.remove("hidden");
-    message.textContent = `${winner.getName()} wins!`;
     gameBoard.disable();
   }
 
@@ -236,6 +239,10 @@ const gameBoard = (function () {
     return winner;
   }
 
+  function tie() {
+    return boardRows.every(row => row.every(mark => mark !== ""));
+  }
+
   function checkBoard() {
     const allBoardLines = Array.from(boardRows);
     allBoardLines.push(...getColumns(boardRows));
@@ -244,6 +251,10 @@ const gameBoard = (function () {
 
     if (winner) {
       game.endRound(winner);
+    }
+
+    if (tie()) {
+      game.endRound('tie');
     }
   }
 
