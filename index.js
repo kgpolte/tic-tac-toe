@@ -18,7 +18,7 @@ function createPlayer() {
     return score;
   }
 
-  function updateScore(num) {
+  function setScore(num) {
     if (!Number.isInteger(num)) return;
     score = num;
   }
@@ -54,7 +54,7 @@ function createPlayer() {
     getName,
     setName,
     getScore,
-    updateScore,
+    setScore,
     getMark,
     setMark,
     getInfo,
@@ -71,16 +71,16 @@ const game = (function () {
   const message = document.querySelector(".message");
 
   let round = 1;
-  let turn = "x";
   const playerX = createPlayer();
   const playerO = createPlayer();
+  let turn = playerX;
 
   function getTurn() {
     return turn;
   }
 
   function toggleTurn() {
-    turn = turn === "x" ? "o" : "x";
+    turn = turn === playerX ? playerO : playerX;
   }
 
   function initPlayers() {
@@ -136,7 +136,7 @@ const game = (function () {
       message.textContent = "Tie Game!"
     } else {
       message.textContent = `${winner.getName()} wins!`;
-      winner.updateScore(winner.getScore() + 1);
+      winner.setScore(winner.getScore() + 1);
       udpateScoreboard(winner);
     }
     element.querySelector(".next-round").classList.remove("hidden");
@@ -144,6 +144,7 @@ const game = (function () {
   }
 
   function reset() {
+    message.textContent = "Prepare to Battle!";
     scoreboard.classList.add("hidden");
     const scoreboardChildren = Array.from(scoreboard.children);
     scoreboardChildren.forEach((child) => child.remove());
@@ -151,7 +152,10 @@ const game = (function () {
     gameBoard.reset();
     gameBoard.hide();
     resetButton.classList.add("hidden");
-    message.textContent = "Get Ready to Battle!";
+    playerX.setScore(0);
+    playerO.setScore(0);
+    turn = playerX;
+    round = 1;
   }
 
   function validateInputs(inputs) {
@@ -351,7 +355,7 @@ const gameBoard = (function () {
         placeMark(
           button.getAttribute("data-row"),
           button.getAttribute("data-column"),
-          game.getTurn()
+          game.getTurn().getMark()
         );
       });
     });
