@@ -62,8 +62,9 @@ const game = (function () {
   const element = document.getElementById("game");
   const nameForm = element.querySelector("form");
   const nameInputs = Array.from(element.querySelectorAll("input"));
-  const startButton = element.querySelector("form > button");
-  const scoreBoard = document.getElementById("scoreboard");
+  const startButton = element.querySelector("button.start");
+  const resetButton = element.querySelector("button.reset");
+  const scoreboard = document.getElementById("scoreboard");
   const message = document.querySelector(".message");
 
   let round = 1;
@@ -94,23 +95,23 @@ const game = (function () {
   }
 
   function renderScoreboard(...players) {
-    scoreBoard.appendChild(players[0].getInfo());
+    scoreboard.appendChild(players[0].getInfo());
     const versusText = document.createElement("h2");
     versusText.textContent = "Vs.";
-    scoreBoard.appendChild(versusText);
-    scoreBoard.appendChild(players[1].getInfo());
+    scoreboard.appendChild(versusText);
+    scoreboard.appendChild(players[1].getInfo());
 
     const nextRoundBtn = document.createElement("button");
     nextRoundBtn.classList.add("next-round", "hidden");
     nextRoundBtn.textContent = "Play Again";
     nextRoundBtn.addEventListener("click", newRound);
-    scoreBoard.appendChild(nextRoundBtn);
+    scoreboard.appendChild(nextRoundBtn);
 
-    scoreBoard.classList.remove("hidden");
+    scoreboard.classList.remove("hidden");
   }
 
   function udpateScoreboard(winner) {
-    const scoreDisplay = scoreBoard.querySelector(
+    const scoreDisplay = scoreboard.querySelector(
       `[data-mark="${winner.getMark()}"] > .score`
     );
     scoreDisplay.textContent = winner.getScore();
@@ -119,7 +120,9 @@ const game = (function () {
   function start() {
     initPlayers();
     nameForm.reset();
+    startButton.disabled = true;
     nameForm.classList.add("hidden");
+    resetButton.classList.remove("hidden");
     message.textContent = "Round 1";
     renderScoreboard(playerX, playerO);
     gameBoard.show();
@@ -130,6 +133,17 @@ const game = (function () {
     udpateScoreboard(winner);
     element.querySelector(".next-round").classList.remove("hidden");
     message.textContent = `${winner.getName()} wins!`;
+  }
+
+  function reset() {
+    scoreboard.classList.add("hidden");
+    const scoreboardChildren = Array.from(scoreboard.children);
+    scoreboardChildren.forEach((child) => child.remove());
+    nameForm.classList.remove("hidden");
+    gameBoard.reset();
+    gameBoard.hide();
+    resetButton.classList.add("hidden");
+    message.textContent = "Get Ready to Battle!";
   }
 
   function validateInputs(inputs) {
@@ -152,6 +166,8 @@ const game = (function () {
         }
       });
     });
+
+    resetButton.addEventListener("click", reset);
   }
 
   function init() {
@@ -242,10 +258,14 @@ const gameBoard = (function () {
     element.classList.remove("hidden");
   }
 
+  function hide() {
+    element.classList.add("hidden");
+  }
+
   function reset() {
     const cells = Array.from(element.querySelectorAll("button"));
 
-    cells.forEach(cell => {
+    cells.forEach((cell) => {
       if (cell.classList.contains("x")) {
         cell.classList.remove("x");
       } else if (cell.classList.contains("o")) {
@@ -312,9 +332,10 @@ const gameBoard = (function () {
   }
 
   return {
-    init, 
+    init,
     show,
-    reset
+    hide,
+    reset,
   };
 })();
 gameBoard.init();
