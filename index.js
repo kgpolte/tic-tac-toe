@@ -1,3 +1,7 @@
+// TODO:
+// add tie detection
+// style the score display to indicate the current turn
+
 function createPlayer() {
   let score = 0;
   let name;
@@ -110,11 +114,11 @@ const game = (function () {
     scoreboard.classList.remove("hidden");
   }
 
-  function udpateScoreboard(winner) {
+  function udpateScoreboard(player) {
     const scoreDisplay = scoreboard.querySelector(
-      `[data-mark="${winner.getMark()}"] > .score`
+      `[data-mark="${player.getMark()}"] > .score`
     );
-    scoreDisplay.textContent = winner.getScore();
+    scoreDisplay.textContent = player.getScore();
   }
 
   function start() {
@@ -133,6 +137,7 @@ const game = (function () {
     udpateScoreboard(winner);
     element.querySelector(".next-round").classList.remove("hidden");
     message.textContent = `${winner.getName()} wins!`;
+    gameBoard.disable();
   }
 
   function reset() {
@@ -263,6 +268,7 @@ const gameBoard = (function () {
   }
 
   function reset() {
+    enable();
     const cells = Array.from(element.querySelectorAll("button"));
 
     cells.forEach((cell) => {
@@ -279,6 +285,20 @@ const gameBoard = (function () {
         boardRows[i][j] = "";
       }
     }
+  }
+
+  function enable() {
+    const cells = document.querySelectorAll(".cell");
+    cells.forEach((cell) => {
+      cell.disabled = false;
+    });
+  }
+
+  function disable() {
+    const cells = document.querySelectorAll(".cell");
+    cells.forEach((cell) => {
+      cell.disabled = true;
+    });
   }
 
   function renderCellIcons(cellElement) {
@@ -336,6 +356,8 @@ const gameBoard = (function () {
     show,
     hide,
     reset,
+    enable,
+    disable,
   };
 })();
 gameBoard.init();
