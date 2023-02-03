@@ -1,5 +1,3 @@
-// TODO:
-
 function createPlayer() {
   let score = 0;
   let name;
@@ -157,13 +155,18 @@ const game = (function () {
 
   function reset() {
     message.textContent = "Prepare to Battle!";
+    resetButton.classList.add("hidden");
+    nameForm.classList.remove("hidden");
+
+    const playAgainBtn = element.querySelector(".next-round");
+    playAgainBtn.removeEventListener("click", newRound);
+
     scoreboard.classList.add("hidden");
     const scoreboardChildren = Array.from(scoreboard.children);
     scoreboardChildren.forEach((child) => child.remove());
-    nameForm.classList.remove("hidden");
+
     gameBoard.reset();
     gameBoard.hide();
-    resetButton.classList.add("hidden");
     playerX.setScore(0);
     playerO.setScore(0);
     turn = playerX;
