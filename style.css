@@ -6,9 +6,11 @@
 :root {
   --platinum: #ebebeb;
   --silver: #c0c0c0;
+  --orange: #e7530f;
   --red-orange: #c44f2c;
   --charcoal: #2c4251;
   --indigo: #254E70;
+  --light-indigo: #1f5c8f;
 }
 
 html {
@@ -57,18 +59,41 @@ body {
   gap: 1em;
 }
 
-fieldset {
+form {
   display: grid;
-  padding: 0.5em;
+  justify-items: center;
+}
+fieldset {
+  position: relative;
+  display: grid;
+  gap: 0.5em;
+  padding: 2em 0.5em 0.5em 0.5em;
   border: none;
 }
-
 fieldset > p {
   padding: 0.2em;
 }
-
+legend {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  text-align: center;
+  font-weight: bold;
+}
 label {
   display: block;
+  color: var(--charcoal);
+}
+input {
+  border: 2px solid white;
+  border-radius: 4px;
+  padding: 0.2em 0.5em;
+}
+input:focus {
+  outline: none;
+  border-color: var(--light-indigo);
+  box-shadow: 1px 1px 4px #bbb;
 }
 
 #scoreboard {
@@ -79,25 +104,24 @@ label {
   align-items: center;
   gap: 0.5em;
 }
-
+#scoreboard.hidden {
+  display: none;
+}
 #scoreboard > h2 {
   justify-self: center;
   align-self: center;
 }
-
 #scoreboard > .player {
   display: grid;
   gap: 0.2em;
   justify-items: center;
   transition: font-size 300ms;
 }
-
 #scoreboard > .active {
   font-size: 1.2em;
-  filter: drop-shadow(2px 2px 2px var(--indigo));
+  filter: drop-shadow(2px 2px 2px #888);
   transition: font-size 300ms;
 }
-
 .player > .name {
   font-size: 1em;
   font-weight: bold;
@@ -109,11 +133,9 @@ label {
   grid-template-columns: repeat(3, 1fr);
   gap: 1em;
 }
-
 #game-board.hidden {
   display: none;
 }
-
 .cell {
   height: 100px;
   width: 100px;
@@ -122,7 +144,10 @@ label {
   border-radius: 8px;
   background: white;
 }
-
+.cell:hover {
+  border-width: 2px;
+  box-shadow: 0px 0px 4px #aaa;
+}
 .cell > img {
   position: absolute;
   height: 80%;
@@ -131,17 +156,31 @@ label {
   opacity: 0;
   transition: opacity 300ms;
 }
-
 .cell.x > .x-icon,
 .cell.o > .o-icon {
   opacity: 1;
   transition: opacity 300ms;
 }
 
+button.control {
+  padding: 0.5em 1em;
+  color: var(--platinum);
+  background: var(--red-orange);
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+}
+button.control:hover {
+  background: var(--orange);
+}
+button.control:disabled {
+  background: #999;
+  border: 1px solid var(--indigo);
+}
 button.next-round {
   justify-self: start;
 }
-
 button.reset {
   justify-self: end;
 }

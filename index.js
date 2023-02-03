@@ -115,7 +115,7 @@ const game = (function () {
     scoreboard.appendChild(players[1].getInfo());
 
     const nextRoundBtn = document.createElement("button");
-    nextRoundBtn.classList.add("next-round", "hidden");
+    nextRoundBtn.classList.add("next-round", "control", "hidden");
     nextRoundBtn.textContent = "Play Again";
     nextRoundBtn.addEventListener("click", newRound);
     scoreboard.appendChild(nextRoundBtn);
